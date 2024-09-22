@@ -1,4 +1,4 @@
-import "./TaskList.css";
+import styles from "./TaskList.module.css";
 
 /* Componente que receberá uma lista de tarefas (via props) e renderiza cada uma delas */
 
@@ -12,7 +12,7 @@ function TaskList() {
 
   return (
     // Usa o método map() para iterar sobre a lista e renderizar um <li> para cada tarefa.
-    // A tag span servirá para possibilitar a estilização dos textos
+    // A tag span com a classe "status" possibilitará a estilização dos textos
 
     <div>
       <h2>Minhas Tarefas</h2>
@@ -21,10 +21,10 @@ function TaskList() {
         {tasks.map(task => (
           <li
             key={task.id}
-            className={task.completed ? "completed" : "pending"}
+            className={task.completed ? styles.completed : styles.pending}
           >
             {task.title}
-            <span className="status">
+            <span className={styles.status}>
               {task.completed ? "(Concluída)" : "(Pendente)"}
             </span>
           </li>

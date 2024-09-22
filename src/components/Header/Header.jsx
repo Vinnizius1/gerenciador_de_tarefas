@@ -1,4 +1,4 @@
-import "./Header.css";
+import styles from "./Header.module.css";
 
 /* 
 Definition and Usage
@@ -15,7 +15,7 @@ https://www.w3schools.com/tags/tag_header.asp
 
 const Header = () => {
   return (
-    <header className="header">
+    <header className={styles.header}>
       <h1>Header</h1>
     </header>
   );
