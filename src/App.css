@@ -1,0 +1,12 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+*/
+body {
+  line-height: 1.5;
+}
