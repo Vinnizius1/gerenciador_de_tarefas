@@ -17,11 +17,13 @@ function TaskList() {
     <div>
       <h2>Minhas Tarefas</h2>
 
-      <ul>
+      <ul className={styles.taskList}>
         {tasks.map(task => (
           <li
             key={task.id}
-            className={task.completed ? styles.completed : styles.pending}
+            className={`${styles.taskItem} ${
+              task.completed ? styles.completed : styles.pending
+            }`}
           >
             {task.title}
             <span className={styles.status}>

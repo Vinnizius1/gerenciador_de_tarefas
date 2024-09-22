@@ -1,21 +1,21 @@
-ul {
+.taskList {
     list-style-type: none;
     padding: 0;
 }
 
-li {
+.taskItem {
     background-color: #f0f0f0;
     margin: 8px 0;
     padding: 10px;
     border-radius: 5px;
 }
 
-li.completed {
+.completed {
     text-decoration: line-through;
     color: grey;
 }
 
-li.pending .status {
+.pending .status {
     font-weight: bold;
 }
 
