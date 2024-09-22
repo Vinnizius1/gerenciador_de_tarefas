@@ -1,0 +1,24 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f0f0f0;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+li.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+li.pending .status {
+    font-weight: bold;
+}
+
+.status {
+    margin-left: 5px;
+}
