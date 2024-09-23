@@ -1,11 +1,12 @@
 // Desativando a regra eslint para prop-types neste arquivo
 /* eslint-disable react/prop-types */
 
+import TaskItem from "../TaskItem/TaskItem";
 import styles from "./TaskList.module.css";
 
 /* Componente que receberá tarefas (via props) e renderizará cada uma delas como numa lista */
 
-function TaskList({ tasks }) {
+function TaskList({ tasks, onToggleTask }) {
   return (
     // Usa o método map() para iterar sobre a lista e renderizar um <li> para cada tarefa.
     // A tag span com a classe "status" possibilitará a estilização dos textos
@@ -15,17 +16,7 @@ function TaskList({ tasks }) {
 
       <ul className={styles.taskList}>
         {tasks.map(task => (
-          <li
-            key={task.id}
-            className={`${styles.taskItem} ${
-              task.completed ? styles.completed : styles.pending
-            }`}
-          >
-            {task.title}
-            <span className={styles.status}>
-              {task.completed ? "(Concluída)" : "(Pendente)"}
-            </span>
-          </li>
+          <TaskItem key={task.id} task={task} onToggleTask={onToggleTask} />
         ))}
       </ul>
     </div>

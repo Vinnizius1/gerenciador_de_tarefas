@@ -1,0 +1,24 @@
+.TaskItem {
+    list-style-type: none;
+    padding: 0;
+}
+
+.taskItem {
+    background-color: #f0f0f0;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+.pending .status {
+    font-weight: bold;
+}
+
+.status {
+    margin-left: 5px;
+}

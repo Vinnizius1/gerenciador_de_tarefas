@@ -13,13 +13,22 @@ function App() {
     setTasks(prevTasks => [...prevTasks, { id: Date.now(), ...newTask }]);
   };
 
+  //Alterna o estado de uma tarefa
+  const onToggleTask = taskId => {
+    setTasks(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
   return (
     <>
       <Header />
 
       <TaskFormInput addTask={addTask} />
 
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} onToggleTask={onToggleTask} />
     </>
   );
 }

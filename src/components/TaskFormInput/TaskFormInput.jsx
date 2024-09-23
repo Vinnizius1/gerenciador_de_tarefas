@@ -4,7 +4,7 @@
 import { useState } from "react";
 import styles from "./TaskFormInput.module.css";
 
-/* Responsável por permitir que o usuário adicione novas tarefas e, eventualmente, edite as existentes. */
+/* Formulário com input para adicionar uma nova tarefa */
 const TaskFormInput = ({ addTask }) => {
   // Cria um estado para armazenar o texto da tarefa
   const [task, setTask] = useState("");
