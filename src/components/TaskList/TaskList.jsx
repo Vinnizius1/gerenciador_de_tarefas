@@ -11,7 +11,7 @@ function TaskList({ tasks, onToggleTask }) {
     // Usa o método map() para iterar sobre a lista e renderizar um <li> para cada tarefa.
     // A tag span com a classe "status" possibilitará a estilização dos textos
 
-    <div>
+    <>
       <h2>Minhas Tarefas</h2>
 
       <ul className={styles.taskList}>
@@ -19,7 +19,7 @@ function TaskList({ tasks, onToggleTask }) {
           <TaskItem key={task.id} task={task} onToggleTask={onToggleTask} />
         ))}
       </ul>
-    </div>
+    </>
   );
 }
 
