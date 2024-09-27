@@ -4,11 +4,11 @@
 import TaskItem from "../TaskItem/TaskItem";
 import styles from "./TaskList.module.css";
 
-/* Componente que receberá tarefas (via props) e renderizará cada uma delas como numa lista */
+/* Componente que receberá tarefas do array no componente "App.jsx" e renderizará cada uma delas como numa lista */
 
-function TaskList({ tasks, onToggleTask }) {
+function TaskList({ tasks, onToggleTask, onDeleteTask, onEditTask }) {
   return (
-    // Usa o método map() para iterar sobre a lista e renderizar um <li> para cada tarefa.
+    // Usa o método map() para iterar sobre o array de tarefas e renderiza um <li> para cada tarefa
     // A tag span com a classe "status" possibilitará a estilização dos textos
 
     <>
@@ -16,7 +16,13 @@ function TaskList({ tasks, onToggleTask }) {
 
       <ul className={styles.taskList}>
         {tasks.map(task => (
-          <TaskItem key={task.id} task={task} onToggleTask={onToggleTask} />
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggleTask={onToggleTask}
+            onDeleteTask={onDeleteTask}
+            onEditTask={onEditTask}
+          />
         ))}
       </ul>
     </>

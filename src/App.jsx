@@ -26,10 +26,25 @@ function App() {
 
   // Alterna o estado de uma tarefa ("taskId") a partir do componente "filho" TaskList
   const onToggleTask = taskId => {
-    // Cria uma nova lista de tarefas ("prevTasks") com o estado da tarefa ("task") alterado
+    // Atualiza a lista de tarefas ("prevTasks") com o estado da tarefa ("task") alterado
     setTasks(prevTasks =>
       prevTasks.map(task =>
         task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  // Função para deletar uma tarefa ("taskId") a partir do componente "filho" TaskList e depois do componente TaskItem
+  const onDeleteTask = taskId => {
+    setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+  };
+
+  // Função para editar uma tarefa ("taskId") a partir do componente "filho" TaskList e depois do componente TaskItem
+  // Altera o "title" da tarefa para o novo título ("newTitle") fornecido pelo usuário
+  const onEditTask = (taskId, newTitle) => {
+    setTasks(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId ? { ...task, title: newTitle } : task
       )
     );
   };
@@ -40,7 +55,12 @@ function App() {
 
       <TaskFormInput addTask={addTask} />
 
-      <TaskList tasks={tasks} onToggleTask={onToggleTask} />
+      <TaskList
+        tasks={tasks}
+        onToggleTask={onToggleTask}
+        onDeleteTask={onDeleteTask}
+        onEditTask={onEditTask}
+      />
     </>
   );
 }
