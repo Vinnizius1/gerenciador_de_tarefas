@@ -47,6 +47,7 @@ function App() {
         task.id === taskId ? { ...task, title: newTitle } : task
       )
     );
+    console.log(tasks);
   };
 
   return (

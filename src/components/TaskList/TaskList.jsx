@@ -8,8 +8,8 @@ import styles from "./TaskList.module.css";
 
 function TaskList({ tasks, onToggleTask, onDeleteTask, onEditTask }) {
   return (
-    // Usa o método map() para iterar sobre o array de tarefas e renderiza um <li> para cada tarefa
-    // A tag span com a classe "status" possibilitará a estilização dos textos
+    // Usa o método map() para iterar sobre o array de tarefas renderizando um <li> para cada tarefa
+    // A tag span com a classe "status" possibilita a estilização dos textos
 
     <>
       <h2>Minhas Tarefas</h2>
