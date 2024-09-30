@@ -1,11 +1,16 @@
-header {
+.footer {
+
     background-color: #282c34;
     padding: 20px;
     text-align: center;
     color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
 }
 
-h1 {
+p {
     /* margin: 0; */
     font-size: 2rem;
 }

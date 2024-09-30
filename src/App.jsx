@@ -7,6 +7,7 @@ import { useTasks } from "./hooks/useTasks";
 import Header from "./components/Header/Header";
 import TaskFormInput from "./components/TaskFormInput/TaskFormInput";
 import TaskList from "./components/TaskList/TaskList";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   // Destructuring do hook "useTasks" para recuperar as funções de manipulação das tarefas
@@ -26,6 +27,8 @@ function App() {
         onDeleteTask={onDeleteTask}
         onEditTask={onEditTask}
       />
+
+      <Footer />
     </>
   );
 }
