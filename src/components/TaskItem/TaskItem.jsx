@@ -3,11 +3,11 @@
 import { useState } from "react";
 import styles from "./TaskItem.module.css";
 
-/* Componente que receberá cada tarefa do "array de tarefas" do componente pai TaskList, renderizará uma <li> para cada tarefa. 
+/* Componente que receberá cada tarefa do "array de tarefas" do componente pai TaskList. 
 Depois permitirá que o usuário altere o estado da tarefa clicando na tag <span> por meio da função "onToggleTask". 
 Observações: 
 - O componente TaskList passa as funções "onToggleTask", "onDeleteTask" e "onEditTask" do componente principal "App.jsx" (efeito de "prop drilling")
-- O componente TaskList passa "task", que é um objeto (com as propriedades: "id", "title" e "completed") resultado do "map" no array de tarefas recebidodo componente principal "App.jsx"
+- O componente TaskList passa uma "task", objeto com as propriedades "id", "title" e "completed", que é o resultado do "map" no array de tarefas recebido do componente principal "App.jsx"
 */
 
 function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
@@ -15,7 +15,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
   const [newTitle, setNewTitle] = useState(task.title); // Armazena o novo título da tarefa
 
   // Função para habilitar o modo de edição do título da tarefa
-  const handleEdit = () => {
+  const handleEditTask = () => {
     if (isEditing) {
       onEditTask(task.id, newTitle); // Se estiver editando, chama a função "onEditTask" passando o ID da tarefa e o novo título da tarefa
     }
@@ -23,7 +23,7 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
   };
 
   return (
-    <li
+    <div
       key={task.id}
       className={`${styles.taskItem} ${
         task.completed ? styles.completed : styles.pending
@@ -41,10 +41,12 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
         </span>
       )}
 
-      <button onClick={handleEdit}>{isEditing ? "Salvar" : "Editar"}</button>
+      <button onClick={handleEditTask}>
+        {isEditing ? "Salvar" : "Editar"}
+      </button>
 
       <button onClick={() => onDeleteTask(task.id)}>Excluir</button>
-    </li>
+    </div>
   );
 }
 

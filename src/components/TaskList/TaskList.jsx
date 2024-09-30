@@ -16,13 +16,14 @@ function TaskList({ tasks, onToggleTask, onDeleteTask, onEditTask }) {
 
       <ul className={styles.taskList}>
         {tasks.map(task => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            onToggleTask={onToggleTask}
-            onDeleteTask={onDeleteTask}
-            onEditTask={onEditTask}
-          />
+          <li key={task.id}>
+            <TaskItem
+              task={task}
+              onToggleTask={onToggleTask}
+              onDeleteTask={onDeleteTask}
+              onEditTask={onEditTask}
+            />
+          </li>
         ))}
       </ul>
     </>
