@@ -1,49 +1,112 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import Header from "./components/Header/Header";
 import TaskFormInput from "./components/TaskFormInput/TaskFormInput";
 import TaskList from "./components/TaskList/TaskList";
+
+import axios from "axios";
+import { fetchTasks } from "./api/api";
 
 function App() {
   // Array que armazenará as tarefas criadas no componente "filho" TaskFormInput
   const [tasks, setTasks] = useState([]);
 
-  // Adiciona uma nova tarefa ("newTask") a partir do componente "filho" TaskFormInput e atualiza o array de tarefas "tasks"
+  // Função para carregar as tarefas da API
+  useEffect(() => {
+    const loadTasks = async () => {
+      try {
+        const fetchedTasks = await fetchTasks();
+        setTasks(fetchedTasks); // Atualiza o estado com as tarefas da API
+      } catch (error) {
+        console.error("Erro ao carregar as tarefas:", error);
+      }
+    };
+
+    // Chama a função para carregar as tarefas
+    loadTasks();
+  }, []);
+
+  // Função para adicionar uma nova tarefa
   const addTask = newTask => {
-    // Adiciona no array de tarefas o novo item ("newTask"), que é um objeto com as propriedades: "id", "title" e "completed"
-    setTasks(prevTasks => [
-      ...prevTasks,
-      {
-        id: crypto.randomUUID(),
+    // Cria uma nova tarefa
+    axios
+      .post("https://jsonplaceholder.typicode.com/todos", {
+        userId: tasks.length + 1,
         title: newTask,
         completed: false,
-      },
-    ]);
+      })
+      .then(response => {
+        setTasks(prevTasks => [
+          ...prevTasks,
+          {
+            ...response.data,
+            id: Date.now(), // Cria um ID único que neste caso, sobreescreve o ID que vem da API
+          },
+        ]);
+      })
+      .catch(error => {
+        console.error("Erro ao adicionar tarefa:", error);
+      });
   };
 
-  // Alterna o estado de uma tarefa ("taskId") a partir do componente "filho" TaskList que, depois, passa a função para o outro componente "filho" TaskItem (efeito de "prop drilling")
-  const onToggleTask = taskId => {
-    // Atualiza o array de tarefas atual ("prevTasks") com o novo estado da tarefa alterado (true vira false, e vice-versa)
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
+  // Função para alternar o status da tarefa (PUT)
+  const onToggleTask = async taskId => {
+    // Encontra a tarefa "taskId" dentro do array "tasks", e armazena na variável "task"
+    const task = tasks.find(task => task.id === taskId);
+
+    // Altera o status da tarefa "taskId" para o oposto
+    const updatedTask = {
+      ...task,
+      completed: !task.completed,
+    };
+
+    // Chama a API para alterar o status da tarefa "taskId"
+    try {
+      await axios.put(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
+        ...updatedTask,
+      });
+      setTasks(prevTasks =>
+        prevTasks.map(task => (task.id === taskId ? updatedTask : task))
+      );
+    } catch (error) {
+      console.error("Erro ao alterar o status da tarefa:", error);
+    }
   };
 
   // Função para deletar uma tarefa ("taskId") a partir do componente "filho" TaskList e depois do componente "filho" TaskItem
-  const onDeleteTask = taskId => {
-    setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+  const onDeleteTask = async taskId => {
+    try {
+      await axios.delete(
+        `https://jsonplaceholder.typicode.com/todos/${taskId}`
+      );
+      setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+    } catch (error) {
+      console.error("Erro ao deletar a tarefa:", error);
+    }
   };
 
   // Função para editar uma tarefa ("taskId")
   // Altera o "title" da tarefa para o novo título ("newTitle") fornecido pelo usuário
   const onEditTask = (taskId, newTitle) => {
-    setTasks(prevTasks =>
-      prevTasks.map(task =>
-        task.id === taskId ? { ...task, title: newTitle } : task
-      )
-    );
+    // Encontra a tarefa "taskId" dentro do array "tasks", e armazena na variável "task"
+    const task = tasks.find(task => task.id === taskId);
+
+    // Chama a API para editar o "title" da tarefa "taskId"
+    try {
+      axios.put(`https://jsonplaceholder.typicode.com/todos/${taskId}`, {
+        ...task,
+        title: newTitle,
+      });
+      // Faz o map para encontrar a tarefa "taskId" e alterar o "title"
+      setTasks(prevTasks =>
+        prevTasks.map(task =>
+          task.id === taskId ? { ...task, title: newTitle } : task
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao editar a tarefa:", error);
+    }
   };
 
   return (
