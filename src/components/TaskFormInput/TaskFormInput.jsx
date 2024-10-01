@@ -3,6 +3,7 @@
 
 import { useState, useRef } from "react";
 import styles from "./TaskFormInput.module.css";
+import Button from "../Button/Button";
 
 /* Formulário com input para adicionar uma nova tarefa */
 const TaskFormInput = ({ addTask }) => {
@@ -38,7 +39,10 @@ const TaskFormInput = ({ addTask }) => {
           onChange={e => setNewTask(e.target.value)}
         />
       </label>
-      <button type="submit">Adicionar Tarefa</button>
+
+      <Button color="#4CAF50" type="submit">
+        Adicionar Tarefa
+      </Button>
     </form>
   );
 };

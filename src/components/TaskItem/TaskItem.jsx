@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import styles from "./TaskItem.module.css";
+import Button from "../Button/Button";
 
 /* Componente que receberá cada tarefa do "array de tarefas" do componente pai TaskList. 
 Depois permitirá que o usuário altere o estado da tarefa clicando na tag <span> por meio da função "onToggleTask". 
@@ -41,11 +42,17 @@ function TaskItem({ task, onToggleTask, onEditTask, onDeleteTask }) {
         </span>
       )}
 
-      <button onClick={handleEditTask}>
+      <Button type="button" color="#4CAF50" onClick={handleEditTask}>
         {isEditing ? "Salvar" : "Editar"}
-      </button>
+      </Button>
 
-      <button onClick={() => onDeleteTask(task.id)}>Excluir</button>
+      <Button
+        type="button"
+        color="#E74C3C"
+        onClick={() => onDeleteTask(task.id)}
+      >
+        Deletar
+      </Button>
     </div>
   );
 }
