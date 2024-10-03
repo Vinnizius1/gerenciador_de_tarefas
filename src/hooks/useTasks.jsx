@@ -9,32 +9,20 @@ export const useTasks = () => {
 
   // Chama a API assim que o componente for montado para buscar as tarefas no array "tasks"
   useEffect(() => {
-    // Atualiza o array "tasks" pela função "setTasks"
-    fetchTasks()
-      .then(fetchedTasks => setTasks(fetchedTasks))
-      .catch(error => console.error("Erro ao carregar as tarefas:", error));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos?_limit=1"
+        );
+        setTasks(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar tarefas:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  ////////////////////////////////
-  /* Funções auxiliares do CRUD */
-  ////////////////////////////////
-
-  // Função para buscar tarefas (GET)
-  async function fetchTasks() {
-    // Definir a URL base da API
-    const API_URL = "https://jsonplaceholder.typicode.com/todos";
-
-    // Função para buscar tarefas (GET)
-    try {
-      const response = await axios.get(`${API_URL}?_limit=1`);
-
-      // Retorna o array de tarefas
-      return response.data;
-    } catch (error) {
-      console.error("Erro ao carregar as tarefas:", error);
-      throw error;
-    }
-  }
   // Função para adicionar uma nova tarefa (POST)
   const addTask = newTask => {
     axios
