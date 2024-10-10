@@ -33,8 +33,8 @@ git clone https://github.com/seu-usuario/task-manager-app.git
 
 Navegue até a pasta do projeto e instale as dependências necessárias com o seguinte comando:
 
-cd projeto_4_react
-npm install
+*cd projeto_4_react*  
+*npm install*
 
 ### 4. Iniciar o JSON Server
 
@@ -42,7 +42,7 @@ O JSON Server simula uma API RESTful. Ele será usado para armazenar e recuperar
 
 Inicie o servidor JSON rodando o comando abaixo:
 
-npx json-server --watch db.json --port 3001
+*npx json-server --watch db.json --port 3001*
 
 Isso iniciará o JSON Server na porta 3001, que é usada pela aplicação para fazer as requisições.
 
@@ -50,7 +50,7 @@ Isso iniciará o JSON Server na porta 3001, que é usada pela aplicação para f
 
 Em uma nova aba do terminal, inicie a aplicação React com o comando:
 
-npm run dev
+*npm run dev*
 
 ### 6. Interagindo com a aplicação
 
