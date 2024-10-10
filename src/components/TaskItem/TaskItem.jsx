@@ -8,33 +8,31 @@ import Button from "../Button/Button";
 /* Representa uma tarefa individual.
 Cada TaskItem pode ser editado ou deletado. Utiliza useState para gerenciar o estado de edição localmente e faz requisições PUT/DELETE 
 */
-
 function TaskItem({ task, onEditTask, onDeleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title); // Armazena o título editado da tarefa
 
+  // Alterna o modo de edição e salva a tarefa se necessário
   const handleToggleEdit = async () => {
-    setIsEditing(!isEditing);
-
-    if (!isEditing) {
+    if (isEditing) {
+      // Se estiver editando, salva a tarefa como novo título
       const updatedTask = { ...task, title: editedTitle };
       try {
         const response = await api.put(`/tasks/${task.id}`, updatedTask);
-        onEditTask(response.data);
+        onEditTask(response.data); // Chama a função para atualizar o estado no componente pai
       } catch (error) {
-        // Lidar com erros da requisição
         console.error("Erro ao atualizar tarefa:", error);
       }
     }
+    setIsEditing(!isEditing); // Alterna o modo de edição
   };
 
-  // Requisição DELETE para deletar a tarefa
+  // Deleta a tarefa
   const deleteTask = async () => {
     try {
       await api.delete(`/tasks/${task.id}`);
       onDeleteTask(task.id);
     } catch (error) {
-      // Lidar com erros da requisição
       console.error("Erro ao deletar tarefa:", error);
     }
   };
@@ -43,6 +41,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
     <div key={task.id} className={styles.taskItem}>
       {isEditing ? (
         <>
+          {/* Modo de Edição */}
           <input
             type="text"
             value={editedTitle}
@@ -51,19 +50,26 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
           <Button type="button" color="#4CAF50" onClick={handleToggleEdit}>
             Salvar
           </Button>
-          <Button type="button" color="#E74C3C" onClick={handleToggleEdit}>
+          <Button
+            type="button"
+            color="#E74C3C"
+            onClick={() => setIsEditing(false)}
+          >
             Cancelar
           </Button>
         </>
       ) : (
-        <span className={styles.status}>{task.title}</span>
+        <>
+          {/* Modo Normal */}
+          <span className={styles.status}>{task.title}</span>
+          <Button type="button" color="#4CAF50" onClick={handleToggleEdit}>
+            Editar
+          </Button>
+          <Button type="button" color="#E74C3C" onClick={deleteTask}>
+            Deletar
+          </Button>
+        </>
       )}
-      <Button type="button" color="#4CAF50" onClick={handleToggleEdit}>
-        Editar
-      </Button>
-      <Button type="button" color="#E74C3C" onClick={deleteTask}>
-        Deletar
-      </Button>
     </div>
   );
 }
