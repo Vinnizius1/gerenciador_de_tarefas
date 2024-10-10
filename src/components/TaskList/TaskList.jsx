@@ -42,7 +42,7 @@ const TaskList = () => {
 
   return (
     <>
-      <h2>Minhas Tarefas</h2>
+      <h2 className={styles.title}>Minhas Tarefas</h2>
       {error && <p>{error}</p>} {/* Exibe erro caso ocorra */}
       <TaskFormInput onTaskAdded={handleTaskAdded} />
       <ul className={styles.taskList}>
