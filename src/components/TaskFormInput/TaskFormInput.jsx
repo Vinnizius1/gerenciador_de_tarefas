@@ -10,30 +10,25 @@ import styles from "./TaskFormInput.module.css";
 Recebe o input do usuário, envia uma requisição POST para adicionar uma tarefa e chama a função "onTaskAdded" para atualizar a lista de tarefas no estado do componente pai TaskList.
 */
 const TaskFormInput = ({ onTaskAdded }) => {
-  const [newTask, setNewTask] = useState(""); // Armazena o texto da tarefa criada
-
-  // Cria uma referência para o campo de título
+  const [newTask, setNewTask] = useState("");
   const inputRef = useRef(null);
 
-  // Função que é chamada ao enviar o formulário (submit)
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    if (newTask === "") return; // Verifica se o campo de texto é vazio, e caso positivo aborta o envio
+    if (newTask === "") return;
 
-    // Cria um objeto com as informações da nova tarefa
     const task = { title: newTask };
 
-    // Cria uma requisição POST para adicionar a nova tarefa
-    api.post("/tasks", task).then(response => {
-      onTaskAdded(response.data);
-    });
+    try {
+      const response = await api.post("/tasks", task);
+      onTaskAdded(response.data); // Usa o objeto retornado da API para atualizar a lista de tarefas "tasks" no estado do componente pai TaskList
+    } catch (error) {
+      console.error("Erro ao adicionar tarefa:", error);
+    }
 
-    onTaskAdded(newTask); // Função recebida do componente pai "TaskList.jsx" que passa o "título" da tarefa criada
-
-    setNewTask(""); // Função local que Limpa o campo de texto após o envio
-
-    inputRef.current.focus(); // Função que faz o foco no campo de texto
+    setNewTask("");
+    inputRef.current.focus();
   };
 
   return (
@@ -44,7 +39,6 @@ const TaskFormInput = ({ onTaskAdded }) => {
           type="text"
           id={styles.newTask}
           placeholder="Adicionar Tarefa"
-          // Associa a "referência" ao campo de título
           ref={inputRef}
           value={newTask}
           onChange={e => setNewTask(e.target.value)}
