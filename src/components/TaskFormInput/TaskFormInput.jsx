@@ -2,13 +2,14 @@
 /* eslint-disable react/prop-types */
 
 import { useState, useRef } from "react";
+import api from "../../services/api";
 import Button from "../Button/Button";
 import styles from "./TaskFormInput.module.css";
 
 /* Formulário com input para adicionar nova tarefa. 
 Recebe o input do usuário, envia uma requisição POST para adicionar uma tarefa e chama a função "onTaskAdded" para atualizar a lista de tarefas no estado do componente pai TaskList.
 */
-const TaskFormInput = ({ addTask }) => {
+const TaskFormInput = ({ onTaskAdded }) => {
   const [newTask, setNewTask] = useState(""); // Armazena o texto da tarefa criada
 
   // Cria uma referência para o campo de título
@@ -20,7 +21,15 @@ const TaskFormInput = ({ addTask }) => {
 
     if (newTask === "") return; // Verifica se o campo de texto é vazio, e caso positivo aborta o envio
 
-    addTask(newTask); // Função recebida do componente pai "App.jsx" que passa o "título" da tarefa criada
+    // Cria um objeto com as informações da nova tarefa
+    const task = { title: newTask };
+
+    // Cria uma requisição POST para adicionar a nova tarefa
+    api.post("/tasks", task).then(response => {
+      onTaskAdded(response.data);
+    });
+
+    onTaskAdded(newTask); // Função recebida do componente pai "TaskList.jsx" que passa o "título" da tarefa criada
 
     setNewTask(""); // Função local que Limpa o campo de texto após o envio
 
