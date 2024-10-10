@@ -56,10 +56,14 @@ npm run dev
 
 Agora você pode:
 
-Adicionar novas tarefas no campo de texto e clicar em "Adicionar Tarefa".
-Editar uma tarefa clicando no botão "Editar", fazer a alteração e clicar em "Salvar".
-Excluir uma tarefa clicando no botão "Deletar" e confirmando a ação no modal de confirmação.
-Tecnologias utilizadas
-React: Biblioteca JavaScript para a construção de interfaces de usuário.
-Axios: Cliente HTTP para realizar as requisições.
-JSON Server: Ferramenta simples e rápida para simular uma API RESTful.
+Adicionar novas tarefas no campo de texto e clicar em "Adicionar Tarefa".  
+
+Editar uma tarefa clicando no botão "Editar", fazer a alteração e clicar em "Salvar".  
+
+Excluir uma tarefa clicando no botão "Deletar" e confirmando a ação no modal de confirmação.  
+
+**Tecnologias utilizadas**  
+
+**React**: Biblioteca JavaScript para a construção de interfaces de usuário.  
+**Axios**: Cliente HTTP para realizar as requisições.  
+**JSON Server**: Ferramenta simples e rápida para simular uma API RESTful.
