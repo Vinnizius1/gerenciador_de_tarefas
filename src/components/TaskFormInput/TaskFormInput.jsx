@@ -2,10 +2,12 @@
 /* eslint-disable react/prop-types */
 
 import { useState, useRef } from "react";
-import styles from "./TaskFormInput.module.css";
 import Button from "../Button/Button";
+import styles from "./TaskFormInput.module.css";
 
-/* Formulário com input para adicionar uma nova tarefa */
+/* Formulário com input para adicionar nova tarefa. 
+Recebe o input do usuário, envia uma requisição POST para adicionar uma tarefa e chama a função "onTaskAdded" para atualizar a lista de tarefas no estado do componente pai TaskList.
+*/
 const TaskFormInput = ({ addTask }) => {
   const [newTask, setNewTask] = useState(""); // Armazena o texto da tarefa criada
 
