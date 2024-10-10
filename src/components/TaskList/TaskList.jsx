@@ -14,7 +14,16 @@ const TaskList = () => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    api.get("/tasks").then(response => setTasks(response.data));
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/tasks");
+        setTasks(response.data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        // Optionally display an error message to the user
+      }
+    };
+    fetchData();
   }, []);
 
   //
