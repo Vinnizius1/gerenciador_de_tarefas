@@ -29,6 +29,11 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
 
   // Deleta a tarefa
   const deleteTask = async () => {
+    // Confirma a exclusão
+    if (!window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
+      return;
+    }
+
     try {
       await api.delete(`/tasks/${task.id}`);
       onDeleteTask(task.id);
