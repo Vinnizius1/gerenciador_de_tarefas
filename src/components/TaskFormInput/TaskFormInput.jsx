@@ -45,7 +45,7 @@ const TaskFormInput = ({ onTaskAdded }) => {
         />
       </label>
 
-      <Button color="#4CAF50" type="submit">
+      <Button color="#4CAF50" type="submit" className={styles.addTaskButton}>
         Adicionar Tarefa
       </Button>
     </form>
