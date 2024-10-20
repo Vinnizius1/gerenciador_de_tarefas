@@ -12,31 +12,30 @@ const TaskList = () => {
   const [error, setError] = useState(null); // Adicionado para capturar erro de rede
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("/tasks", { timeout: 5000 }); //
-        setTasks(response.data);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-        setError(
-          "Erro ao buscar tarefas. Verifique sua conexão com o servidor."
-        );
-      }
-    };
     fetchData();
   }, []);
 
-  const handleTaskAdded = newTask => {
+  const fetchData = async () => {
+    try {
+      const response = await api.get("/tasks", { timeout: 5000 }); //
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+      setError("Erro ao buscar tarefas. Verifique sua conexão com o servidor.");
+    }
+  };
+
+  const onTaskAdded = newTask => {
     setTasks(() => [...tasks, newTask]);
   };
 
-  const handleTaskUpdated = updatedTask => {
+  const onEditTask = updatedTask => {
     setTasks(
       tasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
     );
   };
 
-  const handleTaskDeleted = taskId => {
+  const onDeleteTask = taskId => {
     setTasks(tasks.filter(task => task.id !== taskId));
   };
 
@@ -44,14 +43,14 @@ const TaskList = () => {
     <>
       <h2 className={styles.title}>Minhas Tarefas</h2>
       {error && <p>{error}</p>} {/* Exibe erro caso ocorra */}
-      <TaskFormInput onTaskAdded={handleTaskAdded} />
+      <TaskFormInput onTaskAdded={onTaskAdded} />
       <ul className={styles.taskList}>
         {tasks.map(task => (
           <li key={task.id}>
             <TaskItem
               task={task}
-              onDeleteTask={handleTaskDeleted}
-              onEditTask={handleTaskUpdated}
+              onDeleteTask={onDeleteTask}
+              onEditTask={onEditTask}
             />
           </li>
         ))}

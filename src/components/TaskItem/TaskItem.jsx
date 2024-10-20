@@ -6,8 +6,7 @@ import styles from "./TaskItem.module.css";
 import Button from "../Button/Button";
 
 /* Representa uma tarefa individual.
-Cada TaskItem pode ser editado ou deletado. Utiliza useState para gerenciar o estado de edição localmente e faz requisições PUT/DELETE 
-*/
+   Cada TaskItem pode ser editado ou deletado. Utiliza useState para gerenciar o estado de edição localmente e faz requisições PUT/DELETE */
 function TaskItem({ task, onEditTask, onDeleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title); // Armazena o título editado da tarefa

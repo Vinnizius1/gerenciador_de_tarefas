@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import styles from "./Button.module.css"; // Estilos padrão do botão
+import { memo } from "react";
 
 const Button = ({
   children,
@@ -22,4 +23,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default memo(Button);
