@@ -17,7 +17,7 @@ const TaskList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/tasks", { timeout: 5000 }); //
+      const response = await api.get("/tasksx", { timeout: 5000 }); //
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -42,7 +42,8 @@ const TaskList = () => {
   return (
     <>
       <h2 className={styles.title}>Minhas Tarefas</h2>
-      {error && <p>{error}</p>} {/* Exibe erro caso ocorra */}
+      {error && <p className={styles.error}>{error}</p>}{" "}
+      {/* Exibe erro caso ocorra */}
       <TaskFormInput onTaskAdded={onTaskAdded} />
       <ul className={styles.taskList}>
         {tasks.map(task => (
