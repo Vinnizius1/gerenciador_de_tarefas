@@ -12,29 +12,35 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
   const [editedTitle, setEditedTitle] = useState(task.title); // Armazena o título editado da tarefa
 
   // Alterna o modo de edição e salva a tarefa se necessário
-  const handleToggleEdit = async () => {
+  const editTask = async () => {
     if (isEditing) {
-      // Se estiver editando, salva a tarefa como novo título
+      // Se estiver editando, salva a tarefa com o novo título
       const updatedTask = { ...task, title: editedTitle };
+
       try {
+        // Chama a API para EDITAR o título da tarefa
         const response = await api.put(`/tasks/${task.id}`, updatedTask);
-        onEditTask(response.data); // Chama a função para atualizar o estado no componente pai
+        // Chama a função para atualizar o estado no componente pai (TaskList)
+        onEditTask(response.data);
       } catch (error) {
         console.error("Erro ao atualizar tarefa:", error);
       }
     }
-    setIsEditing(!isEditing); // Alterna o modo de edição
+    // Alterna o modo de edição
+    setIsEditing(!isEditing);
   };
 
-  // Deleta a tarefa
+  // Função para deletar uma tarefa
   const deleteTask = async () => {
-    // Confirma a exclusão
+    // Exibe um alerta e apenas prossegue se o usuário confirmar (clicar no botão OK)
     if (!window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
       return;
     }
 
     try {
+      // Chama a API para DELETAR a tarefa
       await api.delete(`/tasks/${task.id}`);
+      // Chama a função para atualizar o estado no componente pai (TaskList)
       onDeleteTask(task.id);
     } catch (error) {
       console.error("Erro ao deletar tarefa:", error);
@@ -42,7 +48,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
   };
 
   return (
-    <div key={task.id} className={styles.taskItem}>
+    <div className={styles.taskItem}>
       {isEditing ? (
         <>
           {/* Modo de Edição */}
@@ -51,7 +57,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
             value={editedTitle}
             onChange={e => setEditedTitle(e.target.value)}
           />
-          <Button type="button" color="#4CAF50" onClick={handleToggleEdit}>
+          <Button type="button" color="#4CAF50" onClick={editTask}>
             Salvar
           </Button>
           <Button
@@ -66,7 +72,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
         <>
           {/* Modo Normal */}
           <span className={styles.status}>{task.title}</span>
-          <Button type="button" color="#4CAF50" onClick={handleToggleEdit}>
+          <Button type="button" color="#4CAF50" onClick={editTask}>
             Editar
           </Button>
           <Button type="button" color="#E74C3C" onClick={deleteTask}>

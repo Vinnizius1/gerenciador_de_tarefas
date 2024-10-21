@@ -17,7 +17,7 @@ const TaskList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await api.get("/tasksx", { timeout: 5000 }); //
+      const response = await api.get("/tasks", { timeout: 5000 }); //
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
