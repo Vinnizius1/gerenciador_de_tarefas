@@ -1,22 +1,13 @@
-// Desativando a regra eslint para prop-types neste arquivo
-/* eslint-disable react/prop-types */
-
-import styles from "./Button.module.css"; // Estilos padrão do botão
+import styles from "./Button.module.css";
 import { memo } from "react";
 
-const Button = ({
-  children,
-  color,
-  type = "button",
-  onClick = null,
-  className,
-}) => {
+const Button = ({ children, color, type = "button", onClick = null }) => {
   return (
     <button
       type={type}
       style={{ backgroundColor: color }}
       onClick={onClick}
-      className={`${styles.button} ${className}`}
+      className={styles.button}
     >
       {children}
     </button>

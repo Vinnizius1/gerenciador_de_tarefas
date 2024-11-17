@@ -12,10 +12,6 @@ const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null); // Adicionado para capturar erro de rede
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = async () => {
     try {
       const response = await api.get("/tasks", { timeout: 5000 }); //
@@ -25,6 +21,10 @@ const TaskList = () => {
       setError("Erro ao buscar tarefas. Verifique sua conexão com o servidor.");
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const onTaskAdded = newTask => {
     setTasks(() => [...tasks, newTask]);
@@ -45,7 +45,7 @@ const TaskList = () => {
     if (!window.confirm("Tem certeza que deseja deletar todas as tarefas?")) {
       return;
     }
-    console.log(tasks);
+
     try {
       // 1. Buscar todas as tarefas
       const response = await api.get("/tasks");
@@ -65,7 +65,6 @@ const TaskList = () => {
       setError("Erro ao deletar todas as tarefas. Tente novamente mais tarde.");
     }
   };
-  console.log(tasks);
 
   return (
     <>
@@ -81,7 +80,7 @@ const TaskList = () => {
       <ul className={styles.taskList}>
         {tasks.map(task => (
           <li key={task.id}>
-            {/* TELA DE LISTAGEM DE TAREFAS - ITEM DA TELA DE LISTAGEM DE TAREFAS */}
+            {/* ITEM DA TELA DE LISTAGEM DE TAREFAS */}
             <TaskItem
               task={task}
               onDeleteTask={onDeleteTask}

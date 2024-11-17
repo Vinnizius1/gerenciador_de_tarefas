@@ -1,5 +1,3 @@
-// Desativando a regra eslint para prop-types neste arquivo
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import api from "../../services/api";
 import styles from "./TaskItem.module.css";
@@ -8,46 +6,47 @@ import Button from "../Button/Button";
 /* Representa uma tarefa individual.
    Cada TaskItem pode ser editado ou deletado. Utiliza useState para gerenciar o estado de edição localmente e faz requisições PUT/DELETE */
 function TaskItem({ task, onEditTask, onDeleteTask }) {
-  const [isEditing, setIsEditing] = useState(false); // Começa desativado (falso)
-  const [editedTitle, setEditedTitle] = useState(task.title); // Armazena o título editado da tarefa
+  // Estados locais para gerenciar o modo de edição
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState(task.title);
 
   // Alterna o modo de edição e salva a tarefa se necessário
   const editTask = async () => {
-    console.log("Edit mode:", isEditing); // Verifica se estamos no modo de edição
-    console.log("Edited title before save:", editedTitle); // Verifica o título editado
     if (isEditing) {
-      // Se estiver editando, salva a tarefa com o novo título
+      // Se estiver editando, salva a tarefa com o novo título na variável "updatedTask"
       const updatedTask = { ...task, title: editedTitle };
-      console.log("Task to update:", updatedTask); // Verifica a tarefa antes da requisição
+
       try {
         // Chama a API para EDITAR o título da tarefa
         const response = await api.put(`/tasks/${task.id}`, updatedTask);
-        console.log("API response:", response.data); // Verifica a resposta da API
+        if (response && response.data) {
+          // Chama a função para atualizar o estado no componente pai (TaskList)
+          onEditTask(response.data);
+        } else {
+          console.error("Resposta inválida ao atualizar tarefa.");
+        }
         // Chama a função para atualizar o estado no componente pai (TaskList)
         onEditTask(response.data);
       } catch (error) {
         console.error("Erro ao atualizar tarefa:", error);
       }
     }
-    // TÉRMINO DO "IF" responsável pela edição
-    // Alterna o modo de edição
-    setIsEditing(!isEditing);
-    console.log("New edit mode:", !isEditing); // Verifica o novo estado após alternar o modo de edição
+
+    // Inverte o estado de edição
+    setIsEditing(prevState => !prevState);
   };
 
   // Função para deletar uma tarefa
   const deleteTask = async () => {
-    console.log("Delete task triggered"); // Verifica se a função foi acionada
     // Exibe um alerta e apenas prossegue se o usuário confirmar (clicar no botão OK)
     if (!window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
-      console.log("User canceled delete"); // Caso o usuário cancele
       return;
     }
 
     try {
       // Chama a API para DELETAR a tarefa
       await api.delete(`/tasks/${task.id}`);
-      console.log("Task deleted successfully:", task.id); // Verifica o ID da tarefa deletada
+
       // Chama a função para atualizar o estado no componente pai (TaskList)
       onDeleteTask(task.id);
     } catch (error) {
@@ -65,17 +64,14 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
             value={editedTitle}
             onChange={e => setEditedTitle(e.target.value)}
           />
-          {/* Se estiver editando, o botão "Salvar" terá o onClick referenciando a função "editTask" */}
-          <Button type="button" color="#4CAF50" onClick={editTask}>
+
+          {/* A função "editTask" alterará o título da tarefa com o valor de "editedTitle" (resultado da propriedade "value" do input) */}
+          <Button color="#4CAF50" onClick={editTask}>
             Salvar
           </Button>
 
-          {/* Se estiver editando, exibirá um botão para cancelar */}
-          <Button
-            type="button"
-            color="#E74C3C"
-            onClick={() => setIsEditing(false)}
-          >
+          {/* Se clicar no botão Cancelar, o modo de edição será alterado para "false" */}
+          <Button color="#E74C3C" onClick={() => setIsEditing(false)}>
             Cancelar
           </Button>
         </>

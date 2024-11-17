@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Cria uma instância da API
 const api = axios.create({
   baseURL: "http://localhost:3001",
   /*   Comando para rodar:

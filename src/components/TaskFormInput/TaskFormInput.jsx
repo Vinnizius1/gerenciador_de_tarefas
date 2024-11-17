@@ -1,6 +1,3 @@
-// Desativando a regra eslint para prop-types neste arquivo
-/* eslint-disable react/prop-types */
-
 import { useState, useRef } from "react";
 import api from "../../services/api";
 import Button from "../Button/Button";
@@ -10,42 +7,44 @@ import styles from "./TaskFormInput.module.css";
 Recebe o input do usuário, envia uma requisição POST para adicionar uma tarefa e chama a função "onTaskAdded" para atualizar a lista de tarefas no estado do componente pai TaskList.
 */
 const TaskFormInput = ({ onTaskAdded }) => {
-  const [newTask, setNewTask] = useState("");
+  const [task, setTask] = useState("");
   const inputRef = useRef(null);
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (task === "") return;
 
-    if (newTask === "") return;
-
-    const task = { title: newTask };
+    // Cria um objeto com o título da tarefa. Não criamos o "id" porque o servidor vai gerar um automaticamente
+    const taskCreated = { title: task };
 
     try {
-      const response = await api.post("/tasks", task);
-      onTaskAdded(response.data); // Usa o objeto retornado da API para atualizar a lista de tarefas "tasks" no estado do componente pai TaskList
+      // Envia uma requisição POST para adicionar uma nova tarefa a API
+      const postResponse = await api.post("/tasks", taskCreated);
+      // Envia o objeto da resposta do servidor para atualizar a lista "tasks" no estado do componente pai TaskList
+      onTaskAdded(postResponse.data);
     } catch (error) {
       console.error("Erro ao adicionar tarefa:", error);
     }
-
-    setNewTask("");
+    // Limpa o input e foca nele
+    setTask("");
     inputRef.current.focus();
   };
 
   return (
     <form className={styles.TaskFormInput} onSubmit={handleSubmit}>
-      <label htmlFor="newTask">
+      <label htmlFor="task">
         <input
           className={styles.input}
           type="text"
-          id={styles.newTask}
+          id="task"
           placeholder="Adicionar Tarefa"
           ref={inputRef}
-          value={newTask}
-          onChange={e => setNewTask(e.target.value)}
+          value={task}
+          onChange={e => setTask(e.target.value)}
         />
       </label>
 
-      <Button color="#4CAF50" type="submit" className={styles.addTaskButton}>
+      <Button color="#4CAF50" type="submit">
         Adicionar Tarefa
       </Button>
     </form>
