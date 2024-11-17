@@ -9,6 +9,14 @@
     width: 100%;
 }
 
+.label {
+    margin-right: 5px;
+}
+
+/* .button {
+    padding: 10px 20px;
+} */
+
 #newTask {
     width: 100%;
     padding: 10px;

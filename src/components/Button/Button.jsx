@@ -1,13 +1,20 @@
-import styles from "./Button.module.css";
 import { memo } from "react";
 
-const Button = ({ children, color, type = "button", onClick = null }) => {
+import styles from "./Button.module.css";
+
+const Button = ({
+  children,
+  color,
+  type = "button",
+  onClick = null,
+  className,
+}) => {
   return (
     <button
       type={type}
       style={{ backgroundColor: color }}
       onClick={onClick}
-      className={styles.button}
+      className={`${styles.button} ${className}`}
     >
       {children}
     </button>

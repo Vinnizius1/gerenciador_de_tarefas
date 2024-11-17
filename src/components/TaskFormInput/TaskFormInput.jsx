@@ -32,20 +32,22 @@ const TaskFormInput = ({ onTaskAdded }) => {
 
   return (
     <form className={styles.TaskFormInput} onSubmit={handleSubmit}>
-      <label htmlFor="task">
-        <input
-          className={styles.input}
-          type="text"
-          id="task"
-          placeholder="Adicionar Tarefa"
-          ref={inputRef}
-          value={task}
-          onChange={e => setTask(e.target.value)}
-        />
+      <label htmlFor="task" className={styles.label}>
+        Nome da Tarefa:
       </label>
+      {/* <label htmlFor="task"> */}
+      <input
+        className={styles.input}
+        type="text"
+        id="task"
+        ref={inputRef}
+        value={task}
+        onChange={e => setTask(e.target.value)}
+      />
+      {/* </label> */}
 
-      <Button color="#4CAF50" type="submit">
-        Adicionar Tarefa
+      <Button color="#4CAF50" type="submit" className={styles.button}>
+        Adicionar
       </Button>
     </form>
   );

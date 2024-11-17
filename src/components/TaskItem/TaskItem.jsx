@@ -16,15 +16,16 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
       // Se estiver editando, salva a tarefa com o novo título na variável "updatedTask"
       const updatedTask = { ...task, title: editedTitle };
 
+      // Verifica se o título da tarefa está vazio
+      if (updatedTask.title === "") {
+        alert("Por favor, digite um título.");
+        return;
+      }
+
+      // TRY/CATCH para lidar com erros
       try {
-        // Chama a API para EDITAR o título da tarefa
         const response = await api.put(`/tasks/${task.id}`, updatedTask);
-        if (response && response.data) {
-          // Chama a função para atualizar o estado no componente pai (TaskList)
-          onEditTask(response.data);
-        } else {
-          console.error("Resposta inválida ao atualizar tarefa.");
-        }
+
         // Chama a função para atualizar o estado no componente pai (TaskList)
         onEditTask(response.data);
       } catch (error) {
@@ -66,12 +67,16 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
           />
 
           {/* A função "editTask" alterará o título da tarefa com o valor de "editedTitle" (resultado da propriedade "value" do input) */}
-          <Button color="#4CAF50" onClick={editTask}>
+          <Button color="#4CAF50" onClick={editTask} className={styles.button}>
             Salvar
           </Button>
 
           {/* Se clicar no botão Cancelar, o modo de edição será alterado para "false" */}
-          <Button color="#E74C3C" onClick={() => setIsEditing(false)}>
+          <Button
+            color="#E74C3C"
+            onClick={() => setIsEditing(false)}
+            className={styles.button}
+          >
             Cancelar
           </Button>
         </>
@@ -81,10 +86,20 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
           <span className={styles.status}>{task.title}</span>
 
           {/* Se não estiver editando, o botão "Editar" terá o onClick chamará a função "editTask" e, após clicado, "isEditing" será alterado para true e exibirá o "input" para edição */}
-          <Button type="button" color="#4CAF50" onClick={editTask}>
+          <Button
+            type="button"
+            color="#4CAF50"
+            onClick={editTask}
+            className={styles.button}
+          >
             Editar
           </Button>
-          <Button type="button" color="#E74C3C" onClick={deleteTask}>
+          <Button
+            type="button"
+            color="#E74C3C"
+            onClick={deleteTask}
+            className={styles.button}
+          >
             Deletar
           </Button>
         </>
