@@ -72,11 +72,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
           </Button>
 
           {/* Se clicar no botão Cancelar, o modo de edição será alterado para "false" */}
-          <Button
-            color="#E74C3C"
-            onClick={() => setIsEditing(false)}
-            className={styles.button}
-          >
+          <Button color="#E74C3C" onClick={() => setIsEditing(false)}>
             Cancelar
           </Button>
         </>
@@ -86,20 +82,10 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
           <span className={styles.status}>{task.title}</span>
 
           {/* Se não estiver editando, o botão "Editar" terá o onClick chamará a função "editTask" e, após clicado, "isEditing" será alterado para true e exibirá o "input" para edição */}
-          <Button
-            type="button"
-            color="#4CAF50"
-            onClick={editTask}
-            className={styles.button}
-          >
+          <Button type="button" color="#4CAF50" onClick={editTask}>
             Editar
           </Button>
-          <Button
-            type="button"
-            color="#E74C3C"
-            onClick={deleteTask}
-            className={styles.button}
-          >
+          <Button type="button" color="#E74C3C" onClick={deleteTask}>
             Deletar
           </Button>
         </>
