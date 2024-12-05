@@ -25,9 +25,23 @@ const TaskList = () => {
     fetchData();
   }, []);
 
-  const onTaskAdded = newTask => {
+  /*   const onTaskAdded = newTask => {
     setTasks(() => [...tasks, newTask]);
     console.log(newTask);
+  }; */
+
+  // Função para lidar com a criação de novas tarefas
+  const handleTaskSubmit = async newTask => {
+    try {
+      const response = await api.post("/tasks", newTask);
+      console.log(response.data);
+      setTasks([...tasks, response.data]); // Adiciona a tarefa retornada pela API
+    } catch (error) {
+      console.error("Erro ao adicionar tarefa:", error);
+      setError(
+        "Erro ao adicionar tarefa. Por favor, tente novamente mais tarde."
+      );
+    }
   };
 
   const onEditTask = updatedTask => {
@@ -76,7 +90,7 @@ const TaskList = () => {
       {error && <p className={styles.error}>{error}</p>}
 
       {/* FORMULARIO DE ADICIONAR NOVA TAREFA */}
-      <TaskFormInput onTaskAdded={onTaskAdded} />
+      <TaskFormInput onTaskSubmit={handleTaskSubmit} />
 
       <ul className={styles.taskList}>
         {tasks.map(task => (

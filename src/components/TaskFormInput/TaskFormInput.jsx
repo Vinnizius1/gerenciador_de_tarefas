@@ -7,7 +7,7 @@ import styles from "./TaskFormInput.module.css";
 /* Formulário com input para adicionar nova tarefa. 
 Recebe o input do usuário, envia uma requisição POST para adicionar uma tarefa e chama a função "onTaskAdded" para atualizar a lista de tarefas no estado do componente pai TaskList.
 */
-const TaskFormInput = ({ onTaskAdded }) => {
+const TaskFormInput = ({ onTaskSubmit }) => {
   const [task, setTask] = useState("");
   const inputRef = useRef(null);
 
@@ -22,7 +22,9 @@ const TaskFormInput = ({ onTaskAdded }) => {
       title: task,
     };
 
-    try {
+    onTaskSubmit(taskCreated); // Notifica o componente pai
+
+    /*     try {
       // Envia uma requisição POST para adicionar uma nova tarefa a API
       const postResponse = await api.post("/tasks", taskCreated);
       console.log(postResponse.data);
@@ -30,8 +32,8 @@ const TaskFormInput = ({ onTaskAdded }) => {
       onTaskAdded(postResponse.data);
     } catch (error) {
       console.error("Erro ao adicionar tarefa:", error);
-    }
-    // Limpa o input e foca nele
+    } */
+    // Limpa o input e depois foca nele
     setTask("");
     inputRef.current.focus();
     console.log(taskCreated);
