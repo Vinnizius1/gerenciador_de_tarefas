@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import api from "../../services/api";
 import Button from "../Button/Button";
 import styles from "./TaskFormInput.module.css";
 
@@ -16,7 +15,7 @@ const TaskFormInput = ({ onTaskSubmit }) => {
     e.preventDefault();
     if (task === "") return;
 
-    // Cria um objeto com o título da tarefa
+    // Cria um objeto com o título da tarefa escrito pelo usuário
     const taskCreated = {
       id: uuidv4(),
       title: task,
@@ -24,15 +23,6 @@ const TaskFormInput = ({ onTaskSubmit }) => {
 
     onTaskSubmit(taskCreated); // Notifica o componente pai
 
-    /*     try {
-      // Envia uma requisição POST para adicionar uma nova tarefa a API
-      const postResponse = await api.post("/tasks", taskCreated);
-      console.log(postResponse.data);
-      // Envia o objeto da resposta do servidor para atualizar a lista "tasks" no estado do componente pai TaskList
-      onTaskAdded(postResponse.data);
-    } catch (error) {
-      console.error("Erro ao adicionar tarefa:", error);
-    } */
     // Limpa o input e depois foca nele
     setTask("");
     inputRef.current.focus();
@@ -44,7 +34,6 @@ const TaskFormInput = ({ onTaskSubmit }) => {
       <label htmlFor="task" className={styles.label}>
         Nome da Tarefa:
       </label>
-      {/* <label htmlFor="task"> */}
       <input
         className={styles.input}
         type="text"
@@ -53,7 +42,6 @@ const TaskFormInput = ({ onTaskSubmit }) => {
         value={task}
         onChange={e => setTask(e.target.value)}
       />
-      {/* </label> */}
 
       <Button color="#4CAF50" type="submit" className={styles.button}>
         Adicionar
