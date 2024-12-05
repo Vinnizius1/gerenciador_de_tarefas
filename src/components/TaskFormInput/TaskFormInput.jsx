@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 import api from "../../services/api";
 import Button from "../Button/Button";
 import styles from "./TaskFormInput.module.css";
@@ -10,16 +11,21 @@ const TaskFormInput = ({ onTaskAdded }) => {
   const [task, setTask] = useState("");
   const inputRef = useRef(null);
 
+  /* ÚNICA FUNÇÃO DESTE COMPONENTE */
   const handleSubmit = async e => {
     e.preventDefault();
     if (task === "") return;
 
-    // Cria um objeto com o título da tarefa. Não criamos o "id" porque o servidor vai gerar um automaticamente
-    const taskCreated = { title: task };
+    // Cria um objeto com o título da tarefa
+    const taskCreated = {
+      id: uuidv4(),
+      title: task,
+    };
 
     try {
       // Envia uma requisição POST para adicionar uma nova tarefa a API
       const postResponse = await api.post("/tasks", taskCreated);
+      console.log(postResponse.data);
       // Envia o objeto da resposta do servidor para atualizar a lista "tasks" no estado do componente pai TaskList
       onTaskAdded(postResponse.data);
     } catch (error) {
@@ -28,6 +34,7 @@ const TaskFormInput = ({ onTaskAdded }) => {
     // Limpa o input e foca nele
     setTask("");
     inputRef.current.focus();
+    console.log(taskCreated);
   };
 
   return (

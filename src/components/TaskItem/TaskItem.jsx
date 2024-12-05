@@ -21,11 +21,11 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
         alert("Por favor, digite um título.");
         return;
       }
+      console.log(updatedTask);
 
-      // TRY/CATCH para lidar com erros
       try {
-        const response = await api.put(`/tasks/${task.id}`, updatedTask);
-
+        const response = await api.put(`/tasks/${updatedTask.id}`, updatedTask);
+        console.log(response.data);
         // Chama a função para atualizar o estado no componente pai (TaskList)
         onEditTask(response.data);
       } catch (error) {

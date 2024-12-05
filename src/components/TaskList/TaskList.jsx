@@ -1,6 +1,3 @@
-// Desativando a regra eslint para prop-types neste arquivo
-/* eslint-disable react/prop-types */
-
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import TaskItem from "../TaskItem/TaskItem";
@@ -12,28 +9,34 @@ const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null); // Adicionado para capturar erro de rede
 
-  const fetchData = async () => {
-    try {
-      const response = await api.get("/tasks", { timeout: 5000 }); //
-      setTasks(response.data);
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      setError("Erro ao buscar tarefas. Verifique sua conexão com o servidor.");
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/tasks", { timeout: 5000 }); //
+        setTasks(response.data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+        setError(
+          "Erro ao buscar tarefas. Verifique sua conexão com o servidor."
+        );
+      }
+    };
+
     fetchData();
   }, []);
 
   const onTaskAdded = newTask => {
     setTasks(() => [...tasks, newTask]);
+    console.log(newTask);
   };
 
   const onEditTask = updatedTask => {
+    console.log(updatedTask);
+    console.log(tasks);
     setTasks(
       tasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
     );
+    console.log(tasks);
   };
 
   const onDeleteTask = taskId => {
@@ -70,13 +73,11 @@ const TaskList = () => {
     <>
       <h2 className={styles.title}>Minhas Tarefas</h2>
 
-      {/* Exibe erro caso ocorra */}
       {error && <p className={styles.error}>{error}</p>}
 
-      {/* TELA DE CADASTRO DE TAREFA */}
+      {/* FORMULARIO DE ADICIONAR NOVA TAREFA */}
       <TaskFormInput onTaskAdded={onTaskAdded} />
 
-      {/* TELA DE LISTAGEM DE TAREFAS */}
       <ul className={styles.taskList}>
         {tasks.map(task => (
           <li key={task.id}>
@@ -90,7 +91,6 @@ const TaskList = () => {
         ))}
       </ul>
 
-      {/* Se a lista de tarefas estiver vazia, exibe mensagem. Se existir, exibe... */}
       {tasks.length === 0 ? (
         <p className={styles.noTasks}>Nenhuma tarefa adicionada</p>
       ) : (
