@@ -9,6 +9,7 @@ const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null); // Adicionado para capturar erro de rede
 
+  // BUSCA TODAS AS TAREFAS QUANDO O APP CARREGA
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,12 +26,7 @@ const TaskList = () => {
     fetchData();
   }, []);
 
-  /*   const onTaskAdded = newTask => {
-    setTasks(() => [...tasks, newTask]);
-    console.log(newTask);
-  }; */
-
-  // Função para lidar com a criação de novas tarefas
+  // FUNÇÃO PRINCIPAL DO APP
   const handleTaskSubmit = async newTask => {
     try {
       const response = await api.post("/tasks", newTask);
@@ -44,6 +40,7 @@ const TaskList = () => {
     }
   };
 
+  // ATUALIZA UMA TAREFA
   const onEditTask = updatedTask => {
     console.log(updatedTask);
     console.log(tasks);
@@ -57,7 +54,7 @@ const TaskList = () => {
     setTasks(tasks.filter(task => task.id !== taskId));
   };
 
-  // Função para deletar todas as tarefas
+  // DELETA TODAS AS TAREFAS
   const deleteAllTasks = async () => {
     if (!window.confirm("Tem certeza que deseja deletar todas as tarefas?")) {
       return;

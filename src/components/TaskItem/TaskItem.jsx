@@ -15,6 +15,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
     if (isEditing) {
       // Se estiver editando, salva a tarefa com o novo título na variável "updatedTask"
       const updatedTask = { ...task, title: editedTitle };
+      console.log(task);
 
       // Verifica se o título da tarefa está vazio
       if (updatedTask.title === "") {

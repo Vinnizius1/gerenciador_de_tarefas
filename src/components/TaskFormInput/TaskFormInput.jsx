@@ -3,9 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import Button from "../Button/Button";
 import styles from "./TaskFormInput.module.css";
 
-/* Formulário com input para adicionar nova tarefa. 
-Recebe o input do usuário, envia uma requisição POST para adicionar uma tarefa e chama a função "onTaskAdded" para atualizar a lista de tarefas no estado do componente pai TaskList.
-*/
+/* Formulário com input para adicionar a tarefa digitada pelo usuário */
 const TaskFormInput = ({ onTaskSubmit }) => {
   const [task, setTask] = useState("");
   const inputRef = useRef(null);
@@ -21,11 +19,14 @@ const TaskFormInput = ({ onTaskSubmit }) => {
       title: task,
     };
 
+    /*  */
+    /* PROP AQUI */
     onTaskSubmit(taskCreated); // Notifica o componente pai
+    /* PROP AQUI */
+    /*  */
 
-    // Limpa o input e depois foca nele
-    setTask("");
-    inputRef.current.focus();
+    setTask(""); // Limpa o input
+    inputRef.current.focus(); // Foca no input
     console.log(taskCreated);
   };
 
