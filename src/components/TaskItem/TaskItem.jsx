@@ -11,10 +11,13 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
   const [editedTitle, setEditedTitle] = useState(task.title);
 
   // Alterna o modo de edição e salva a tarefa se necessário
-  const editTask = async () => {
+  const editTask = () => {
     if (isEditing) {
-      // Se estiver editando, salva a tarefa com o novo título na variável "updatedTask"
-      const updatedTask = { ...task, title: editedTitle };
+      /* Explicação sobre o Nullish Coalescing (?? ""):
+O operador de coalescência nula ?? é usado para fornecer um valor padrão de "" (string vazia) se editedTitle?.trim() resultar em null ou undefined. Isso evita que o título atualizado seja undefined. */
+
+      // Se estiver editando, salva a tarefa com o novo título dentro da variável "updatedTask"
+      const updatedTask = { ...task, title: editedTitle?.trim() ?? "" };
       console.log(task);
 
       // Verifica se o título da tarefa está vazio
@@ -22,16 +25,14 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
         alert("Por favor, digite um título.");
         return;
       }
+      /*       else {
+        updatedTask.title = updatedTask.title.trim();
+      } */
       console.log(updatedTask);
 
-      try {
-        const response = await api.put(`/tasks/${updatedTask.id}`, updatedTask);
-        console.log(response.data);
-        // Chama a função para atualizar o estado no componente pai (TaskList)
-        onEditTask(response.data);
-      } catch (error) {
-        console.error("Erro ao atualizar tarefa:", error);
-      }
+      /* PROP AQUI */
+      onEditTask(updatedTask); // Notifica o componente pai
+      /* PROP AQUI */
     }
 
     // Inverte o estado de edição

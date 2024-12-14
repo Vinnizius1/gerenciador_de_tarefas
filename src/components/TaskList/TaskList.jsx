@@ -31,7 +31,7 @@ const TaskList = () => {
     try {
       const response = await api.post("/tasks", newTask);
       console.log(response.data);
-      setTasks([...tasks, response.data]); // Adiciona a tarefa retornada pela API
+      setTasks([...tasks, response.data]); // Adiciona a tarefa () retornada pela API
     } catch (error) {
       console.error("Erro ao adicionar tarefa:", error);
       setError(
@@ -41,14 +41,20 @@ const TaskList = () => {
   };
 
   // ATUALIZA UMA TAREFA
-  const onEditTask = updatedTask => {
+  const onEditTask = async updatedTask => {
     console.log(updatedTask);
     console.log(tasks);
-    setTasks(
-      tasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
-    );
-    console.log(tasks);
+    // Chama a API para ATUALIZAR a tarefa
+    try {
+      await api.put(`/tasks/${updatedTask.id}`, updatedTask);
+      setTasks(
+        tasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
+      );
+    } catch (error) {
+      console.error("Erro ao atualizar tarefa:", error);
+    }
   };
+  console.log(tasks);
 
   const onDeleteTask = taskId => {
     setTasks(tasks.filter(task => task.id !== taskId));

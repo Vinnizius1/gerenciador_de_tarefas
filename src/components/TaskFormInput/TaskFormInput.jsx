@@ -9,21 +9,19 @@ const TaskFormInput = ({ onTaskSubmit }) => {
   const inputRef = useRef(null);
 
   /* ÚNICA FUNÇÃO DESTE COMPONENTE */
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (task === "") return;
 
     // Cria um objeto com o título da tarefa escrito pelo usuário
     const taskCreated = {
       id: uuidv4(),
-      title: task,
+      title: task.trim(),
     };
 
-    /*  */
     /* PROP AQUI */
     onTaskSubmit(taskCreated); // Notifica o componente pai
     /* PROP AQUI */
-    /*  */
 
     setTask(""); // Limpa o input
     inputRef.current.focus(); // Foca no input
