@@ -106,22 +106,24 @@ const TaskList = () => {
       {/* FORMULARIO DE ADICIONAR NOVA TAREFA */}
       <TaskFormInput onTaskSubmit={handleTaskSubmit} />
 
-      <ul className={styles.taskList}>
-        {tasks.map(task => (
-          <li key={task.id}>
-            {/* ITEM DA TELA DE LISTAGEM DE TAREFAS */}
-            <TaskItem
-              task={task}
-              onDeleteTask={onDeleteTask}
-              onEditTask={onEditTask}
-            />
-          </li>
-        ))}
-      </ul>
-
-      {tasks.length === 0 ? (
-        <p className={styles.noTasks}>Nenhuma tarefa adicionada</p>
+      {tasks.length > 0 ? (
+        <ul className={styles.taskList}>
+          {tasks.map(task => (
+            <li key={task.id}>
+              {/* ITEM DA TELA DE LISTAGEM DE TAREFAS */}
+              <TaskItem
+                task={task}
+                onDeleteTask={onDeleteTask}
+                onEditTask={onEditTask}
+              />
+            </li>
+          ))}
+        </ul>
       ) : (
+        <p className={styles.noTasks}>Nenhuma tarefa adicionada</p>
+      )}
+
+      {tasks.length > 1 && (
         <Button onClick={deleteAllTasks}>Apagar todas as tarefas</Button>
       )}
     </>
