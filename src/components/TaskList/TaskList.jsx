@@ -13,7 +13,7 @@ const TaskList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/tasks", { timeout: 5000 }); //
+        const response = await api.get("/tasks", { timeout: 6000 }); // Define o timeout de 5 segundos, se a requisição demorar mais, mostra o erro de rede
         setTasks(response.data);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -40,13 +40,15 @@ const TaskList = () => {
     }
   };
 
-  // ATUALIZA UMA TAREFA
+  // ATUALIZA 1 TAREFA
   const onEditTask = async updatedTask => {
     console.log(updatedTask);
     console.log(tasks);
-    // Chama a API para ATUALIZAR a tarefa
     try {
+      // Chama a API para ATUALIZAR a tarefa
       await api.put(`/tasks/${updatedTask.id}`, updatedTask);
+
+      // Compara o id da tarefa editado no componente filho TaskItem com o id de cada tarefa no array tasks e então atualiza APENAS a tarefa correspondente
       setTasks(
         tasks.map(task => (task.id === updatedTask.id ? updatedTask : task))
       );
@@ -56,8 +58,17 @@ const TaskList = () => {
   };
   console.log(tasks);
 
-  const onDeleteTask = taskId => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+  // DELETA 1 TAREFA
+  const onDeleteTask = async taskId => {
+    try {
+      // Chama a API para DELETAR a tarefa
+      await api.delete(`/tasks/${taskId}`);
+
+      // Compara o id da tarefa deletada no componente filho TaskItem com o id de cada tarefa no array tasks e então remove a tarefa correspondente por meio do função FILTER
+      setTasks(tasks.filter(task => task.id !== taskId));
+    } catch (error) {
+      console.error("Erro ao deletar tarefa:", error);
+    }
   };
 
   // DELETA TODAS AS TAREFAS

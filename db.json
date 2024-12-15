@@ -1,9 +1,4 @@
 {
   "$comment": "endpoint para GET: http://localhost:3001/tasks; para POST: http://localhost:3001/tasks; para DELETE: http://localhost:3001/tasks/:id; para PUT: http://localhost:3001/tasks/:id",
-  "tasks": [
-    {
-      "id": "4731fee6-736d-408e-a9e0-1cfe123af07a",
-      "title": "Vinicius Matos1111"
-    }
-  ]
+  "tasks": []
 }

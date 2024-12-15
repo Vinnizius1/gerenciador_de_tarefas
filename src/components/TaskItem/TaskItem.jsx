@@ -1,5 +1,4 @@
 import { useState } from "react";
-import api from "../../services/api";
 import styles from "./TaskItem.module.css";
 import Button from "../Button/Button";
 
@@ -10,7 +9,7 @@ function TaskItem({ task, onEditTask, onDeleteTask }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
 
-  // Alterna o modo de edição e salva a tarefa se necessário
+  // EDITA 1 TAREFA
   const editTask = () => {
     if (isEditing) {
       /* Explicação sobre o Nullish Coalescing (?? ""):
@@ -39,22 +38,21 @@ O operador de coalescência nula ?? é usado para fornecer um valor padrão de "
     setIsEditing(prevState => !prevState);
   };
 
-  // Função para deletar uma tarefa
-  const deleteTask = async () => {
+  // DELETA 1 TAREFA
+  const deleteTask = data => {
+    console.log(data);
     // Exibe um alerta e apenas prossegue se o usuário confirmar (clicar no botão OK)
-    if (!window.confirm("Tem certeza que deseja deletar esta tarefa?")) {
+    if (
+      !window.confirm(
+        `Tem certeza que deseja deletar esta tarefa "${task.title}"?`
+      )
+    ) {
       return;
     }
 
-    try {
-      // Chama a API para DELETAR a tarefa
-      await api.delete(`/tasks/${task.id}`);
-
-      // Chama a função para atualizar o estado no componente pai (TaskList)
-      onDeleteTask(task.id);
-    } catch (error) {
-      console.error("Erro ao deletar tarefa:", error);
-    }
+    /* PROP AQUI */
+    onDeleteTask(task.id);
+    /* PROP AQUI */
   };
 
   return (
