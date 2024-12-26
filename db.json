@@ -1,4 +1,21 @@
 {
   "$comment": "endpoint para GET: http://localhost:3001/tasks; para POST: http://localhost:3001/tasks; para DELETE: http://localhost:3001/tasks/:id; para PUT: http://localhost:3001/tasks/:id",
-  "tasks": []
+  "tasks": [
+    {
+      "id": "4eb739d5-16a0-448f-9c36-4e7f20832a7e",
+      "title": "1"
+    },
+    {
+      "id": "0bf96175-94d5-47d8-bcc8-6e2e995a4a01",
+      "title": "2"
+    },
+    {
+      "id": "78078f7a-796d-469a-9f97-7726ac5e372f",
+      "title": "3"
+    },
+    {
+      "id": "70f678cb-7ba6-48be-babd-9e37a018ae82",
+      "title": "4"
+    }
+  ]
 }

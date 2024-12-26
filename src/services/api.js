@@ -1,10 +1,23 @@
 import axios from "axios";
 
 // Cria uma instância da API
-const api = axios.create({
+export const api = axios.create({
   baseURL: "http://localhost:3001",
   /*   Comando para rodar:
     npx json-server --watch db.json --port 3001 */
 });
 
-export default api;
+export const getTasks = async () => {
+  const response = await api.get("/tasks");
+  return response.data;
+};
+
+export const postTasks = async newTask => {
+  const response = await api.post("/tasks", newTask);
+  return response.data;
+};
+
+export const deleteTask = async taskId => {
+  const response = await api.delete(`/tasks/${taskId}`);
+  return response.data;
+};

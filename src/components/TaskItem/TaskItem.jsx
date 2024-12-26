@@ -39,8 +39,8 @@ O operador de coalescência nula ?? é usado para fornecer um valor padrão de "
   };
 
   // DELETA 1 TAREFA
-  const deleteTask = data => {
-    console.log(data);
+  const deleteTask = id => {
+    console.log(id);
     // Exibe um alerta e apenas prossegue se o usuário confirmar (clicar no botão OK)
     if (
       !window.confirm(
@@ -51,7 +51,7 @@ O operador de coalescência nula ?? é usado para fornecer um valor padrão de "
     }
 
     /* PROP AQUI */
-    onDeleteTask(task.id);
+    onDeleteTask(id);
     /* PROP AQUI */
   };
 
@@ -85,7 +85,11 @@ O operador de coalescência nula ?? é usado para fornecer um valor padrão de "
           <Button type="button" color="#4CAF50" onClick={editTask}>
             Editar
           </Button>
-          <Button type="button" color="#E74C3C" onClick={deleteTask}>
+          <Button
+            type="button"
+            color="#E74C3C"
+            onClick={() => deleteTask(task.id)}
+          >
             Deletar
           </Button>
         </>

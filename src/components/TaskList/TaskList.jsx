@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../services/api";
+import { api, getTasks, postTasks } from "../../services/api";
 import TaskItem from "../TaskItem/TaskItem";
 import styles from "./TaskList.module.css";
 import TaskFormInput from "../TaskFormInput/TaskFormInput";
@@ -13,8 +13,12 @@ const TaskList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get("/tasks", { timeout: 6000 }); // Define o timeout de 5 segundos, se a requisição demorar mais, mostra o erro de rede
-        setTasks(response.data);
+        /*         const response = await api.get("/tasks", { timeout: 6000 }); // Define o timeout de 5 segundos, se a requisição demorar mais, mostra o erro de rede
+        setTasks(response.data); */
+
+        const response = await getTasks();
+        setTasks(response);
+        console.log(response);
       } catch (error) {
         console.error("Error fetching tasks:", error);
         setError(
@@ -29,9 +33,12 @@ const TaskList = () => {
   // FUNÇÃO PRINCIPAL DO APP
   const handleTaskSubmit = async newTask => {
     try {
-      const response = await api.post("/tasks", newTask);
+      /*       const response = await api.post("/tasks", newTask);
       console.log(response.data);
-      setTasks([...tasks, response.data]); // Adiciona a tarefa () retornada pela API
+      setTasks([...tasks, response.data]); // Adiciona a tarefa () retornada pela API */
+      const response = await postTasks(newTask);
+      setTasks([...tasks, response]);
+      console.log(tasks, response);
     } catch (error) {
       console.error("Erro ao adicionar tarefa:", error);
       setError(
@@ -65,7 +72,7 @@ const TaskList = () => {
       await api.delete(`/tasks/${taskId}`);
 
       // Compara o id da tarefa deletada no componente filho TaskItem com o id de cada tarefa no array tasks e então remove a tarefa correspondente por meio do função FILTER
-      setTasks(tasks.filter(task => task.id !== taskId));
+      setTasks(tasks.filter((_, index) => index !== taskId));
     } catch (error) {
       console.error("Erro ao deletar tarefa:", error);
     }
