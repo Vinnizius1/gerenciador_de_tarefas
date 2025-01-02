@@ -63,7 +63,6 @@ const TaskList = () => {
       console.error("Erro ao atualizar tarefa:", error);
     }
   };
-  console.log(tasks);
 
   // DELETA 1 TAREFA
   const onDeleteTask = async taskId => {

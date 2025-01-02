@@ -13,8 +13,8 @@ export const getTasks = async () => {
 };
 
 export const postTasks = async newTask => {
-  const response = await api.post("/tasks", newTask);
-  return response.data;
+  const { data } = await api.post("/tasks", newTask);
+  return data;
 };
 
 export const deleteTask = async taskId => {
