@@ -6,26 +6,37 @@ import styles from "./TaskFormInput.module.css";
 /* Formulário com input para adicionar a tarefa digitada pelo usuário */
 const TaskFormInput = ({ onTaskSubmit }) => {
   const [task, setTask] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const inputRef = useRef(null);
 
   /* ÚNICA FUNÇÃO DESTE COMPONENTE */
   const handleSubmit = e => {
     e.preventDefault();
+
+    // Verifica se o input está vazio
     if (task === "") return;
 
-    // Cria um objeto com o título da tarefa escrito pelo usuário
-    const taskCreated = {
-      id: uuidv4(),
-      title: task.trim(),
-    };
+    // Muda o estado para verdadeiro mostrando assim o texto "Adicionando..."
+    setIsSubmitting(true);
 
-    /* PROP AQUI */
-    onTaskSubmit(taskCreated); // Notifica o componente pai
-    /* PROP AQUI */
+    setTimeout(() => {
+      // Cria um objeto com o título da tarefa escrito pelo usuário
+      const taskCreated = {
+        id: uuidv4(),
+        title: task.trim(),
+      };
 
-    setTask(""); // Limpa o input
-    inputRef.current.focus(); // Foca no input
-    console.log(taskCreated);
+      /* PROP AQUI */
+      onTaskSubmit(taskCreated); // Notifica o componente pai
+      /* PROP AQUI */
+
+      setTask(""); // Limpa o input
+      inputRef.current.focus(); // Foca no input
+      setIsSubmitting(false); // Volta o estado para falso mostrando o texto "Adicionar"
+
+      console.log(taskCreated);
+    }, 1000);
   };
 
   return (
@@ -43,7 +54,7 @@ const TaskFormInput = ({ onTaskSubmit }) => {
       />
 
       <Button color="#4CAF50" type="submit" className={styles.button}>
-        Adicionar
+        {isSubmitting ? "Adicionando..." : "Adicionar"}
       </Button>
     </form>
   );

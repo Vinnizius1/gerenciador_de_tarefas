@@ -1,4 +1,4 @@
-# Gerenciador de Tarefas 
+# Gerenciador de Tarefas
 
 ## Sobre
 
@@ -33,8 +33,7 @@ Este projeto é um gerenciador de tarefas simples, desenvolvido com React e util
 - Integração com a API utilizando Axios.
 - Fácil configuração de backend usando JSON Server para simular um servidor RESTful, facilitando o desenvolvimento e a prototipagem.
 
-
-**Tecnologias utilizadas**:  
+**Tecnologias utilizadas**:
 
 **React**: Biblioteca JavaScript para a construção de interfaces de usuário.  
 **Axios**: Cliente HTTP para realizar as requisições.  
