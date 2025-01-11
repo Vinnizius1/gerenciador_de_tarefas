@@ -71,7 +71,7 @@ const TaskList = () => {
       await api.delete(`/tasks/${taskId}`);
 
       // Compara o id da tarefa deletada no componente filho TaskItem com o id de cada tarefa no array tasks e então remove a tarefa correspondente por meio do função FILTER
-      setTasks(tasks.filter((_, index) => index !== taskId));
+      setTasks(tasks.filter((task) => task.id !== taskId));
     } catch (error) {
       console.error("Erro ao deletar tarefa:", error);
     }
