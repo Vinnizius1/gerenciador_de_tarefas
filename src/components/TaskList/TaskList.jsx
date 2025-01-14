@@ -7,18 +7,15 @@ import Button from "../Button/Button";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState(null); // Adicionado para capturar erro de rede
+  const [error, setError] = useState(null); // Adicionado para capturar erro de rede e mostrá-lo na tela
 
   // BUSCA TODAS AS TAREFAS QUANDO O APP CARREGA
   useEffect(() => {
     const fetchData = async () => {
+      // Chama a API para BUSCAR as tarefas
       try {
-        /*         const response = await api.get("/tasks", { timeout: 6000 }); // Define o timeout de 5 segundos, se a requisição demorar mais, mostra o erro de rede
-        setTasks(response.data); */
-
         const response = await getTasks();
         setTasks(response);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching tasks:", error);
         setError(
@@ -33,12 +30,9 @@ const TaskList = () => {
   // FUNÇÃO PRINCIPAL DO APP
   const handleTaskSubmit = async newTask => {
     try {
-      /*       const response = await api.post("/tasks", newTask);
-      console.log(response.data);
-      setTasks([...tasks, response.data]); // Adiciona a tarefa () retornada pela API */
+      // Chama a API para ADICIONAR a tarefa
       const response = await postTasks(newTask);
       setTasks([...tasks, response]);
-      console.log(tasks, response);
     } catch (error) {
       console.error("Erro ao adicionar tarefa:", error);
       setError(
@@ -49,8 +43,6 @@ const TaskList = () => {
 
   // ATUALIZA 1 TAREFA
   const onEditTask = async updatedTask => {
-    console.log(updatedTask);
-    console.log(tasks);
     try {
       // Chama a API para ATUALIZAR a tarefa
       await api.put(`/tasks/${updatedTask.id}`, updatedTask);
@@ -130,7 +122,7 @@ const TaskList = () => {
       {error && <p className={styles.error}>{error}</p>}
 
       {/* FORMULARIO DE ADICIONAR NOVA TAREFA */}
-      <TaskFormInput onTaskSubmit={handleTaskSubmit} />
+      <TaskFormInput handleTaskSubmit={handleTaskSubmit} />
 
       {tasks.length > 0 ? (
         <ul className={styles.taskList}>

@@ -93,7 +93,7 @@ O operador de coalescência nula ?? é usado para fornecer um valor padrão de "
             Deletar
           </Button>
 
-          <button className={styles.moveButton} onClick={() => moveTaskUp(task.id)}>▲</button>
+          <button className={styles.moveButton} onClick={() => moveTaskUp(task.id)}>☝️</button>
         </>
       )}
     </div>

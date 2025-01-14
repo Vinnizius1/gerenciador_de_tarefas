@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import styles from "./TaskFormInput.module.css";
 
 /* Formulário com input para adicionar a tarefa digitada pelo usuário */
-const TaskFormInput = ({ onTaskSubmit }) => {
+const TaskFormInput = ({ handleTaskSubmit }) => {
   const [task, setTask] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,7 +28,7 @@ const TaskFormInput = ({ onTaskSubmit }) => {
       };
 
       /* PROP AQUI */
-      onTaskSubmit(taskCreated); // Notifica o componente pai
+      handleTaskSubmit(taskCreated); // Notifica o componente pai
       /* PROP AQUI */
 
       setTask(""); // Limpa o input
