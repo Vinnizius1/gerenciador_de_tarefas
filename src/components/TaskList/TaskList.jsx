@@ -103,6 +103,26 @@ const TaskList = () => {
     }
   };
 
+  /*  */
+  function moveTaskUp(taskId) {
+    const updatedTasks = [...tasks]; // Cria uma cópia do array
+  
+    // Encontra o índice da tarefa com o ID correspondente
+    const index = updatedTasks.findIndex(task => task.id === taskId);
+  
+    // Verifica se a tarefa não é a primeira da lista
+    if (index > 0) {
+      // Troca de posição com a tarefa anterior
+      [updatedTasks[index], updatedTasks[index - 1]] = [
+        updatedTasks[index - 1],
+        updatedTasks[index],
+      ];
+    }
+  
+    setTasks(updatedTasks);
+  }
+  /*  */
+
   return (
     <>
       <h2 className={styles.title}>Minhas Tarefas</h2>
@@ -121,6 +141,7 @@ const TaskList = () => {
                 task={task}
                 onDeleteTask={onDeleteTask}
                 onEditTask={onEditTask}
+                moveTaskUp={moveTaskUp}
               />
             </li>
           ))}
@@ -130,7 +151,7 @@ const TaskList = () => {
       )}
 
       {tasks.length > 1 && (
-        <Button onClick={deleteAllTasks}>Apagar todas as tarefas</Button>
+        <Button onClick={deleteAllTasks} className={styles.deleteAllTasks}>Apagar todas as tarefas</Button>
       )}
     </>
   );
