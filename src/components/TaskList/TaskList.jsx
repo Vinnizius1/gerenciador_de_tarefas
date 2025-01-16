@@ -113,6 +113,24 @@ const TaskList = () => {
   
     setTasks(updatedTasks);
   }
+
+  function moveTaskDown(taskId) {
+    const updatedTasks = [...tasks]; // Cria uma cópia do array
+  
+    // Encontra o índice da tarefa com o ID correspondente
+    const index = updatedTasks.findIndex(task => task.id === taskId);
+  
+    // Verifica se a tarefa não é a primeira da lista
+    if (index < tasks.length - 1) {
+      // Troca de posição com a tarefa anterior
+      [updatedTasks[index], updatedTasks[index + 1]] = [
+        updatedTasks[index + 1],
+        updatedTasks[index],
+      ];
+    }
+  
+    setTasks(updatedTasks);
+  }
   /*  */
 
   return (
@@ -134,6 +152,7 @@ const TaskList = () => {
                 onDeleteTask={onDeleteTask}
                 onEditTask={onEditTask}
                 moveTaskUp={moveTaskUp}
+                moveTaskDown={moveTaskDown}
               />
             </li>
           ))}

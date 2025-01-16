@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 
 /* Representa uma tarefa individual.
    Cada TaskItem pode ser editado ou deletado. Utiliza useState para gerenciar o estado de edição localmente e faz requisições PUT/DELETE */
-function TaskItem({ task, onEditTask, onDeleteTask, moveTaskUp }) {
+function TaskItem({ task, onEditTask, onDeleteTask, moveTaskUp, moveTaskDown }) {
   // Estados locais para gerenciar o modo de edição
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
@@ -94,6 +94,7 @@ O operador de coalescência nula ?? é usado para fornecer um valor padrão de "
           </Button>
 
           <button className={styles.moveButton} onClick={() => moveTaskUp(task.id)}>☝️</button>
+          <button className={styles.moveButton} onClick={() => moveTaskDown(task.id)}>👇</button>
         </>
       )}
     </div>
