@@ -115,21 +115,25 @@ const TaskList = () => {
   }
 
   function moveTaskDown(taskId) {
-    const updatedTasks = [...tasks]; // Cria uma cópia do array
-  
-    // Encontra o índice da tarefa com o ID correspondente
-    const index = updatedTasks.findIndex(task => task.id === taskId);
-  
-    // Verifica se a tarefa não é a primeira da lista
-    if (index < tasks.length - 1) {
-      // Troca de posição com a tarefa anterior
-      [updatedTasks[index], updatedTasks[index + 1]] = [
-        updatedTasks[index + 1],
-        updatedTasks[index],
-      ];
-    }
-  
-    setTasks(updatedTasks);
+    setTasks((prevTasks)=>{ 
+      // Cria uma cópia do array atual de tarefas
+      const updatedTasks = [...prevTasks];
+
+      // Encontra a posição da tarefa que queremos mover
+      const index = updatedTasks.findIndex(task => task.id === taskId);
+
+      // Verifica se a tarefa nao é a ultima da lista
+      if (index < updatedTasks.length - 1) {
+        // Troca a tarefa de posição com a próxima
+        [updatedTasks[index], updatedTasks[index + 1]] = [
+          updatedTasks[index + 1],
+          updatedTasks[index]
+        ];
+      }
+      
+      // Retorna o novo array de tarefas
+      return updatedTasks;
+     })
   }
   /*  */
 
